@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Geethanjali S · floral portfolio</title>
+    <!-- Google Font for clean typography -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: #000000;
+        font-family: "Inter", sans-serif;
+        color: #eef3fc;
+        line-height: 1.6;
+        padding: 2rem 1.5rem;
+      }
+
+      .container {
+        max-width: 1300px;
+        margin: 0 auto;
+      }
+
+      /* ===== TYPOGRAPHY (clean, professional) ===== */
+      h1 {
+        font-size: clamp(2.8rem, 8vw, 4rem);
+        font-weight: 500;
+        letter-spacing: -0.02em;
+        background: linear-gradient(135deg, #ffffff, #d6e2ff);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        margin-bottom: 0.5rem;
+      }
+
+      h2 {
+        font-size: 2.2rem;
+        font-weight: 450;
+        margin: 2.5rem 0 1.2rem;
+        color: #eef3fc;
+        border-left: 5px solid #9bb8ff;
+        padding-left: 1.2rem;
+      }
+
+      h3 {
+        font-size: 1.5rem;
+        font-weight: 500;
+        margin-bottom: 0.8rem;
+        color: #c7d6ff;
+      }
+
+      .subhead {
+        color: #a3b5dd;
+        margin-bottom: 2rem;
+        font-size: 1.1rem;
+        font-weight: 350;
+      }
+
+      /* ===== HERO SECTION WITH PHOTO ON SIDE ===== */
+      .hero {
+        display: flex;
+        align-items: center;
+        gap: 4rem;
+        margin: 2rem 0 4rem;
+        flex-wrap: wrap;
+      }
+
+      .hero-content {
+        flex: 2 1 400px;
+      }
+
+      .profile-pic {
+        flex: 0 0 280px;
+        position: relative;
+        z-index: 5;
+      }
+
+      .profile-pic {
+        width: 190px;
+        height: 290px;
+        border-radius: 50%;
+        overflow: hidden; /* 🔥 IMPORTANT */
+        border: 4px solid #38bdf8;
+        box-shadow: 0 0 25px rgba(56, 189, 248, 0.35);
+      }
+
+      .profile-pic img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* 🔥 IMPORTANT */
+        border-radius: 50%;
+        display: block;
+      }
+
+      .hero-greeting {
+        font-size: 1.3rem;
+        color: #ffb8a6;
+        margin-bottom: 0.5rem;
+      }
+
+      .hero-title {
+        font-size: 1.6rem;
+        font-weight: 380;
+        color: #cbd5f0;
+        margin: 1.5rem 0 2rem;
+        border-left: 4px solid #9bb8ff;
+        padding-left: 1.8rem;
+      }
+
+      /* ===== BASE CARD STYLES (clean foundation) ===== */
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1.8rem;
+        margin: 2rem 0;
+      }
+
+      .skill-card,
+      .project-card,
+      .achievement-item {
+        background: rgba(20, 30, 48, 0.7);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 2rem;
+        padding: 2rem 1.8rem;
+        transition: all 0.3s ease;
+        color: #e2eaff;
+        position: relative;
+        overflow: hidden;
+        z-index: 2;
+      }
+
+      /* ===== FLOWER BLOOM ANIMATION (pure CSS, multi-color) ===== */
+      /* Each card gets its own set of petals via pseudo-elements and spans */
+      .skill-card,
+      .project-card,
+      .achievement-item {
+        --petal-1: rgba(155, 184, 255, 0.6); /* soft blue */
+        --petal-2: rgba(255, 200, 150, 0.6); /* peach */
+        --petal-3: rgba(200, 170, 255, 0.6); /* lavender */
+        --petal-4: rgba(130, 220, 200, 0.5); /* seafoam */
+      }
+
+      /* all petal elements share base styling */
+      .skill-card::before,
+      .skill-card::after,
+      .skill-card .petal,
+      .project-card::before,
+      .project-card::after,
+      .project-card .petal,
+      .achievement-item::before,
+      .achievement-item::after,
+      .achievement-item .petal {
+        content: "";
+        position: absolute;
+        width: 140px;
+        height: 140px;
+        background: radial-gradient(
+          circle at 30% 40%,
+          var(--petal-color),
+          transparent 70%
+        );
+        border-radius: 60% 30% 50% 40%;
+        opacity: 0;
+        transform: scale(0.2) rotate(0deg);
+        transition: opacity 0.5s ease,
+          transform 0.6s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+        pointer-events: none;
+        z-index: -1;
+        mix-blend-mode: soft-light;
+        filter: blur(4px);
+      }
+
+      /* position each petal uniquely */
+      .skill-card::before,
+      .project-card::before,
+      .achievement-item::before {
+        top: -20px;
+        left: -20px;
+        --petal-color: var(--petal-1);
+        border-radius: 40% 60% 30% 70%;
+      }
+
+      .skill-card::after,
+      .project-card::after,
+      .achievement-item::after {
+        bottom: -30px;
+        right: -20px;
+        width: 160px;
+        height: 160px;
+        --petal-color: var(--petal-2);
+        border-radius: 70% 30% 60% 40%;
+      }
+
+      .skill-card .petal:nth-of-type(1),
+      .project-card .petal:nth-of-type(1),
+      .achievement-item .petal:nth-of-type(1) {
+        top: 10%;
+        right: -5%;
+        width: 130px;
+        height: 130px;
+        --petal-color: var(--petal-3);
+        border-radius: 30% 70% 40% 60%;
+      }
+
+      .skill-card .petal:nth-of-type(2),
+      .project-card .petal:nth-of-type(2),
+      .achievement-item .petal:nth-of-type(2) {
+        bottom: 0%;
+        left: -10%;
+        width: 150px;
+        height: 150px;
+        --petal-color: var(--petal-4);
+        border-radius: 50% 20% 50% 50%;
+      }
+
+      .skill-card .petal:nth-of-type(3),
+      .project-card .petal:nth-of-type(3),
+      .achievement-item .petal:nth-of-type(3) {
+        top: 40%;
+        left: 20%;
+        width: 180px;
+        height: 180px;
+        --petal-color: rgba(255, 255, 255, 0.15);
+        filter: blur(8px);
+        border-radius: 50%;
+        mix-blend-mode: overlay;
+      }
+
+      /* HOVER ACTIVATION: petals bloom outward */
+      .skill-card:hover::before,
+      .skill-card:hover::after,
+      .skill-card:hover .petal,
+      .project-card:hover::before,
+      .project-card:hover::after,
+      .project-card:hover .petal,
+      .achievement-item:hover::before,
+      .achievement-item:hover::after,
+      .achievement-item:hover .petal {
+        opacity: 0.7;
+        transform: scale(1) rotate(10deg);
+      }
+
+      /* vary rotation for organic feel */
+      .skill-card:hover::before {
+        transform: scale(1.3) rotate(-20deg);
+      }
+      .skill-card:hover::after {
+        transform: scale(1.4) rotate(30deg);
+      }
+      .skill-card:hover .petal:nth-of-type(1) {
+        transform: scale(1.5) rotate(45deg);
+        transition-delay: 0.03s;
+      }
+      .skill-card:hover .petal:nth-of-type(2) {
+        transform: scale(1.6) rotate(-25deg);
+        transition-delay: 0.06s;
+      }
+      .skill-card:hover .petal:nth-of-type(3) {
+        transform: scale(1.2) rotate(5deg);
+        opacity: 0.4;
+      }
+
+      .project-card:hover::before {
+        transform: scale(1.3) rotate(-15deg);
+      }
+      .project-card:hover::after {
+        transform: scale(1.4) rotate(25deg);
+      }
+      .project-card:hover .petal:nth-of-type(1) {
+        transform: scale(1.5) rotate(40deg);
+      }
+      .project-card:hover .petal:nth-of-type(2) {
+        transform: scale(1.4) rotate(-30deg);
+      }
+
+      .achievement-item:hover::before {
+        transform: scale(1.2) rotate(-12deg);
+      }
+      .achievement-item:hover::after {
+        transform: scale(1.3) rotate(22deg);
+      }
+      .achievement-item:hover .petal:nth-of-type(1) {
+        transform: scale(1.4) rotate(35deg);
+      }
+      .achievement-item:hover .petal:nth-of-type(2) {
+        transform: scale(1.5) rotate(-28deg);
+      }
+
+      /* ===== MULTI-COLOR VARIATIONS PER SECTION ===== */
+      .skill-card {
+        --petal-1: rgba(155, 184, 255, 0.7);
+        --petal-2: rgba(255, 200, 150, 0.6);
+        --petal-3: rgba(210, 160, 255, 0.6);
+        --petal-4: rgba(130, 220, 200, 0.5);
+      }
+
+      .project-card {
+        --petal-1: rgba(255, 180, 160, 0.6); /* coral */
+        --petal-2: rgba(160, 210, 255, 0.6); /* light blue */
+        --petal-3: rgba(230, 190, 255, 0.6); /* lilac */
+        --petal-4: rgba(150, 230, 190, 0.5); /* mint */
+      }
+
+      .achievement-item {
+        --petal-1: rgba(200, 170, 255, 0.7); /* purple */
+        --petal-2: rgba(255, 220, 140, 0.6); /* warm yellow */
+        --petal-3: rgba(140, 220, 220, 0.6); /* teal */
+        --petal-4: rgba(255, 190, 200, 0.5); /* pink */
+      }
+
+      /* ===== CARD HOVER COLOR SHIFTS (subtle gradients) ===== */
+      .skill-card:hover {
+        background: linear-gradient(145deg, #253559, #1d2b4a);
+        border-color: rgba(155, 184, 255, 0.4);
+        box-shadow: 0 20px 30px -15px rgba(155, 184, 255, 0.3);
+      }
+
+      .project-card:hover {
+        background: linear-gradient(145deg, #2a3655, #1f2d48);
+        border-color: rgba(255, 180, 160, 0.5);
+        box-shadow: 0 20px 30px -12px rgba(255, 180, 160, 0.3);
+      }
+
+      .achievement-item:hover {
+        background: linear-gradient(145deg, #283c4a, #1d3140);
+        border-color: rgba(200, 170, 255, 0.5);
+        box-shadow: 0 15px 25px -12px rgba(200, 170, 255, 0.3);
+      }
+
+      /* ===== ACHIEVEMENTS LIST ===== */
+      .achievements-list {
+        list-style: none;
+        margin: 2rem 0;
+      }
+
+      .achievement-item {
+        margin-bottom: 1.2rem;
+        padding: 1.5rem 2rem;
+        border-radius: 3rem;
+      }
+
+      /* ===== PROJECT CARD ===== */
+      .project-card {
+        max-width: 750px;
+        margin: 2rem 0;
+        padding: 2.5rem;
+      }
+
+      /* ===== CONTACT (clean, no flowers to keep photo focus) ===== */
+      .contact-panel {
+        background: rgba(20, 30, 48, 0.6);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 2.5rem;
+        padding: 2.5rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        margin: 2rem 0;
+      }
+
+      .contact-item {
+        flex: 1 1 200px;
+      }
+
+      .contact-label {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        color: #a3b5dd;
+        letter-spacing: 1px;
+      }
+
+      .contact-value {
+        font-size: 1.2rem;
+        color: #eef3fc;
+      }
+
+      .contact-value a {
+        color: #c7d6ff;
+        text-decoration: none;
+        border-bottom: 1px dotted #4f6a9e;
+      }
+
+      .contact-value a:hover {
+        border-bottom-color: #9bb8ff;
+      }
+
+      /* ===== NAVIGATION (simple, minimal) ===== */
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        background: rgba(10, 18, 30, 0.6);
+        backdrop-filter: blur(12px);
+        padding: 1rem 2rem;
+        border-radius: 3rem;
+        border: 1px solid rgba(255, 255, 255, 0.04);
+      }
+
+      .logo {
+        font-size: 1.6rem;
+        font-weight: 500;
+        background: linear-gradient(135deg, #ffffff, #c7d6ff);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+      }
+
+      .nav-links a {
+        color: #c7d6ff;
+        text-decoration: none;
+        font-weight: 400;
+        transition: color 0.2s;
+      }
+
+      .nav-links a:hover {
+        color: white;
+      }
+
+      /* ===== RESPONSIVE (photo stays visible) ===== */
+      @media (max-width: 800px) {
+        .hero {
+          flex-direction: column-reverse;
+          gap: 2rem;
+        }
+        .hero-photo {
+          flex: 0 0 220px;
+          max-width: 260px;
+        }
+        nav {
+          flex-direction: column;
+          align-items: stretch;
+          text-align: center;
+        }
+        .nav-links {
+          justify-content: center;
+          flex-wrap: wrap;
+        }
+      }
+
+      @media (max-width: 500px) {
+        .hero-photo {
+          flex: 0 0 180px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation: none !important;
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- navigation -->
+      <nav>
+        <span class="logo">geethanjali s</span>
+        <ul class="nav-links">
+          <li><a href="#home">home</a></li>
+          <li><a href="#skills">skills</a></li>
+          <li><a href="#projects">projects</a></li>
+          <li><a href="#achievements">achievements</a></li>
+          <li><a href="#contact">contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- HERO with photo on the side (always visible) -->
+      <section id="home" class="hero">
+        <div class="hero-content">
+          <div class="hero-greeting">👋 Hi, I'm</div>
+          <h1>Geethanjali S</h1>
+          <div class="hero-title">
+            Computer Science and Engineering Student | Aspiring Software
+            Developer
+          </div>
+          <p style="margin-bottom: 1.2rem; color: #d0dcf5">
+            I am a motivated Computer Science undergraduate with a strong
+            academic background and a passion for programming and
+            problem-solving. I enjoy learning new technologies and applying my
+            knowledge to build practical software solutions.
+          </p>
+          <p style="margin-bottom: 1.2rem; color: #d0dcf5">
+            I am currently pursuing a Bachelor's degree in Computer Science and
+            Engineering at Government College of Engineering, Salem. I have
+            consistently performed well academically and enjoy working on
+            software projects that strengthen my programming and logical
+            thinking skills.
+          </p>
+          <p style="color: #d0dcf5">
+            I have hands-on experience in Java-based application development and
+            foundational knowledge in C++, SQL, and Web Development. I actively
+            participate in technical events such as hackathons and seminars to
+            expand my technical exposure. I am eager to start my career as a
+            software developer and continuously improve my skills.
+          </p>
+        </div>
+        <div class="profile-pic">
+          <img
+            src="photo_me.jpeg"
+            alt="Geethanjali S"
+            onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIiB2aWV3Qm94PSIwIDAgNDAwIDQwMCI+PHJlY3Qgd2lkdGg9IjQwMCIgaGVpZ2h0PSI0MDAiIGZpbGw9IiMxRTI5M0IiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjI0IiBmaWxsPSIjMzhCREY4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+UGhvdG8gbm90IGZvdW5kPC90ZXh0Pjwvc3ZnPg==';"
+          />
+        </div>
+      </section>
+
+      <!-- skills section with flower bloom (each card gets petal spans) -->
+      <section id="skills">
+        <h2>skills</h2>
+        <div class="subhead">technologies & tools i work with</div>
+        <div class="skills-grid">
+          <div class="skill-card">
+            Programming Languages: C, C++, Java
+            <span class="petal"></span><span class="petal"></span
+            ><span class="petal"></span>
+          </div>
+          <div class="skill-card">
+            Database: MySQL
+            <span class="petal"></span><span class="petal"></span
+            ><span class="petal"></span>
+          </div>
+          <div class="skill-card">
+            Web Development: HTML, CSS, JavaScript (Basics)
+            <span class="petal"></span><span class="petal"></span
+            ><span class="petal"></span>
+          </div>
+          <div class="skill-card">
+            Office Tools: MS Word, MS Excel
+            <span class="petal"></span><span class="petal"></span
+            ><span class="petal"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- projects -->
+      <section id="projects">
+        <h2>projects</h2>
+        <div class="subhead">academic & personal projects</div>
+        <div class="project-card">
+          <h3>Hotel Management System</h3>
+          <p style="margin-bottom: 1rem">
+            Developed a Hotel Management System using Java and JDBC.
+          </p>
+          <p>
+            Implemented database connectivity to manage hotel records
+            efficiently and improved understanding of backend logic, database
+            operations, and Java application development.
+          </p>
+          <span class="petal"></span><span class="petal"></span
+          ><span class="petal"></span>
+        </div>
+      </section>
+
+      <!-- achievements -->
+      <section id="achievements">
+        <h2>achievements & activities</h2>
+        <div class="subhead">technical & extra‑curricular</div>
+        <div class="achievements-list">
+          <div class="achievement-item">
+            Participated in Smart India Hackathon (SIH) held at Government
+            College of Engineering, Salem.
+            <span class="petal"></span><span class="petal"></span
+            ><span class="petal"></span>
+          </div>
+          <div class="achievement-item">
+            Selected for NTSE Examination (2020).
+            <span class="petal"></span><span class="petal"></span
+            ><span class="petal"></span>
+          </div>
+          <div class="achievement-item">
+            Winner of essay competitions at St. Theresa's Girls Higher Secondary
+            School.
+            <span class="petal"></span><span class="petal"></span
+            ><span class="petal"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- contact (clean, no flowers) -->
+      <section id="contact">
+        <h2>contact</h2>
+        <div class="subhead">let's connect</div>
+        <div class="contact-panel">
+          <div class="contact-item">
+            <div class="contact-label">location</div>
+            <div class="contact-value">Tharangambadi, Mayiladuthurai</div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-label">email</div>
+            <div class="contact-value">
+              <a href="mailto:geethanjalisargunan@gmail.com"
+                >geethanjalisargunan@gmail.com</a
+              >
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-label">linkedin</div>
+            <div class="contact-value">
+              <a
+                href="https://www.linkedin.com/in/geethanjali-s-17aa41351"
+                target="_blank"
+                rel="noopener"
+                >linkedin.com/in/geethanjali-s-17aa41351</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <script src="./chatbot.js"></script>
+  </body>
+</html>
